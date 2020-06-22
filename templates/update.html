@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+
+    
+    <head>
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        
+        <a href="/warehouse" class="header"><h1>Inventory Managment System</h1></a>
+        
+    </head>
+    
+    <body>
+        
+        <div class="inline update_block" style="width: 30%; margin: 0 auto; vertical-align: top;">
+            <div>
+            <h2 class="impact float_left">
+                Item:
+            </h2>
+            </div>
+            <div>
+            <ul class="impact float_left" id="item_description">
+                <li>Serial: {{item.serial}}</li>
+                <li>Name: {{item.name}}</li>
+                <li>Location: {{item.location}}</li>
+                <li>Amount in Stock: {{item.amount}}</li>
+            </ul>
+            </div>
+        </div>
+        
+        
+        <div class="inline update_block" style="width: 30%; margin: 0 auto;">
+            <div>
+            <h2 class="impact">
+                Putting or Pulling?:
+            </h2>
+            </div>
+            
+            <div>
+            <form action="/warehouse/dashboard" method="POST" class="impact">
+                <input type="hidden" name="serial" value={{item.serial}}>
+                <input type="hidden" name="secret" value="update">
+                
+                <label for="put">Put</label>
+                <input type="radio" id="put" name="choice" value="put">
+                
+                <label for="pull">Pull</label>
+                <input type="radio" id="pull" name="choice" value="pull">
+                
+                <h6 class="impact" style="margin: 5px auto">_______________________________</h6>
+                
+                <h3 class="impact" style="margin: 15px auto">By how many?</h3>
+                <input type="number" id="amount" name="amount" min=0 max=9999 style="padding: 5px 0;">
+                
+                <br><br>
+                
+                <input type="submit" id="submit" name="submit" value="submit">
+            </form>
+            </div>
+        </div>
+        <div style="margin-top: 9%">
+            <form action="/warehouse" method="GET" class="inline">
+                <input type="submit" value="Go Back" name="cancel" style="margin-right:100px;">
+            </form>
+            <form action="/warehouse/remove" method="POST" class="inline">
+                <input type="hidden" name="serial" value={{item.serial}}>
+                <input type="submit" name="delete" id="delete" value="Delete from System">
+            </form>
+        </div>
+    </body>
+    
+    <foot
+
+</html>

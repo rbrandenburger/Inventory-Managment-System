@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+
+    
+    <head>
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        
+        <a href="/warehouse" class="header"><h1>Inventory Managment System</h1></a>
+        
+    </head>
+    
+    <body>
+        <div>
+        <h2 class="impact">Add New Item</h2>
+        </div>
+        
+        <div class="add_form">
+            <form action="/warehouse/itemsubmit" method="POST" class="impact">
+                <label for="serial">Serial #:</label>
+                <input type="text" id="serial" name="serial" pattern="[0-9]{7}" placeholder="7 digit numeric" required>
+                <br>
+                <label for="name">Item Name: </label>
+                <input type="text" id="name" name="name" maxlength="40" required>
+                <br>
+                <label for="location">Location: </label>
+                <input type="text" id="location" name="location" pattern="[A-Z]{1}-[0-9]{3}" placeholder="ex format: 'A-001'" required>
+                <br>
+                <label for="amount">Amount in Stock:</label>
+                <input type="number" id="amount" name="amount" max=9999 min=0 value=0>
+                <br>
+                <br>
+                <input type="submit" name="submit" value="submit">
+            </form>
+        </div>
+        <div>
+            <form action="/warehouse">
+                <input type="submit" value="Cancel" style="width:200px; margin-top:100px;">
+            </form>
+        </div>
+    </body>
+
+</html>

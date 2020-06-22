@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        
+        <a href="/warehouse" class="header"><h1>Inventory Managment System</h1></a>
+        
+    </head>
+    
+    <body>
+        <div>
+            <form action="/warehouse" method='POST'>
+                <input type="hidden" name="search" value="1">
+                <label class="big_font">Search:  </label>
+                <input type="text" name="name" id="name" style="width: 400px;" placeholder="Item Name">
+                <input type="submit" name="submit" value="search" style="margin-left:20px;">
+            </form>
+        </div>
+    
+        <div class="table margins">
+            <table class="center">
+                <thead>
+                    <tr>
+                        {% for c in columns %}
+                            <th scope="col">{{c}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in table_data %}
+                    <form action="/warehouse/update" method="POST">
+                        <tr>
+                            <td>{{item.serial}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.location}}</td>
+                            <td>{{item.amount}}</td>
+                            <td><input type="hidden" name="secret" value={{item.serial}}> <input type="submit" name="selected" value="Select" style="width:70%;"></td>
+                        </tr>
+                    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="margins">
+            <form action="/warehouse/addnew" method="GET" style="margin:20px auto;">
+                <input type="submit" name="add" value="Add A New Item" >
+            </form>
+        </div>
+    </body>
+    
+    <footer>
+        <p class="impact" style="float: left;">By: Remington Brandenburger</p>
+        <a href="/warehouse/about" class="foot"><p class="impact" style="float: right; text-decoration: underline;">About/README</p></a>
+    </footer>
+    
+    
+</html>
