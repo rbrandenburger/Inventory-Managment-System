@@ -2,18 +2,24 @@
 
 <html>
 
-    
     <head>
         
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <title>Add Item</title>
         
-        <a href="/warehouse" class="header"><h1>Inventory Managment System</h1></a>
-        
-    </head>
-    
+    </head>    
+
     <body>
+        
+        <header>
+            
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+            
+            <a href="/warehouse" class="header"><h1>Inventory Managment System</h1></a>
+            
+        </header>
+        
         <div>
-        <h2 class="impact">Add New Item</h2>
+            <h2 class="impact">Add New Item</h2>
         </div>
         
         <div class="add_form">
@@ -34,11 +40,11 @@
                 <input type="submit" name="submit" value="submit">
             </form>
         </div>
+        
         <div>
             <form action="/warehouse">
                 <input type="submit" value="Cancel" style="width:200px; margin-top:100px;">
             </form>
         </div>
     </body>
-
 </html>
