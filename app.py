@@ -3,14 +3,15 @@ import json
 from database.database import Database
 
 app = Flask('__name__', static_folder='static', static_url_path='/static')
-application = app
 
+#This is the dashboard page of the program
 @app.route('/', methods=['GET','POST'])
 def dashboard():
     
-    db = Database()
+    db = Database() #Represents the database holding items
     columns = ["Serial #", "Item", "Location", "Amount","Putt / Pull / Delete"]
     
+    #This try-except is used to determine if there was a search submitted by the user
     try:
         if(request.form['search'] == "1"):
             name = request.form['name']
@@ -27,6 +28,7 @@ def dashboard():
         
     return render_template("dashboard.html",columns = columns,table_data=items)
 
+#This loads in the data of the chosen item and passes the info to the html document
 @app.route('/update', methods=['GET', 'POST'])
 def update_page():
     if request.method == 'POST':
@@ -36,6 +38,7 @@ def update_page():
 
     return render_template("update.html", item = thing)
     
+#If it has been chosen to delete the item, this method is called, and then the user is redirected to the dashboard
 @app.route('/remove', methods=['POST'])
 def remove_item():
     if request.method == 'POST':
@@ -45,6 +48,7 @@ def remove_item():
         
     return redirect("/warehouse")
     
+#This updates the item after the user presses submit, and then redirects them to the dashboard
 @app.route('/dashboard', methods=['GET', 'POST'])
 def updated_dashboard():
     if request.method == 'POST':
@@ -58,21 +62,21 @@ def updated_dashboard():
         
         db = Database()
         db.changeItemAmount(serial, amt)
-        
-    columns = ["Serial #", "Item", "Location", "Amount","Putt / Pull"]
-    items = db.getAllItems()
     
     return redirect("/warehouse")
-    
+
+#Simply loads the addnew html file
 @app.route('/addnew', methods=['POST', 'GET'])
 def add_new():
     
     return render_template("addnew.html")
-    
+   
+#After submitting the new item, this method is called.
+#Then the user is redirected to the dashboard 
 @app.route('/itemsubmit', methods=['POST'])
 def submit():
     
-    #Add some server side validation
+    #Add some server side form validation
     
     serial = request.form['serial']
     name = request.form['name']
@@ -84,12 +88,13 @@ def submit():
     
     return redirect("/warehouse")
     
+#Simply loads the about html file
 @app.route('/about')
 def about():
     
     return render_template("about.html")
 
-
+#How the flask app starts itself up
 if __name__ == '__main__':
-    app.run(debug=True) #Set to local host currently
+    app.run(debug=True)
 

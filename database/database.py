@@ -3,6 +3,7 @@ from .base import Session
 
 class Database:
     
+    #Tool to add item to database
     def addItem(self, serial, name, location, amount):
         
         session = Session()
@@ -12,7 +13,8 @@ class Database:
         session.commit()
         
         session.close()
-    
+        
+    #Perform a database query by serial number
     def getBySerial(self, serial_num):
         
         session = Session()
@@ -22,7 +24,8 @@ class Database:
         session.close()
         
         return results
-        
+    
+    #Change the item amount
     def changeItemAmount(self,serial_num, how_much):
         
         session = Session()
@@ -33,6 +36,7 @@ class Database:
         
         session.close()
         
+    #Returns every item in the database
     def getAllItems(self):
         
         session = Session()
@@ -42,7 +46,8 @@ class Database:
         session.close()
         
         return all_items
-        
+    
+    #Deletes an item based on a serial number match
     def deleteItem(self, serial_num):
         
         session = Session()
@@ -52,7 +57,8 @@ class Database:
         session.commit()
         
         session.close()
-
+    
+    #Perform a database query by item name
     def getByName(self, item_name):
         
         session = Session()

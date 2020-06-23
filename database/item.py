@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, Table
 from .base import Base
 from sqlalchemy.orm import relationship
 
+#Represents the table in the database.  Can add/delete/update rows with this
 class Item(Base):
     __tablename__ = 'tblItems'
     ID = Column('itemID', Integer, nullable=False, primary_key=True, autoincrement=True)
