@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect
 import json
 from database.database import Database
+from database.database_tools import db_tool
+from profanityfilter import ProfanityFilter
 
 app = Flask('__name__', static_folder='static', static_url_path='/static')
 
 #This is the dashboard page of the program
 @app.route('/', methods=['GET','POST'])
 def dashboard():
-    
+
     db = Database() #Represents the database holding items
     columns = ["Serial #", "Item", "Location", "Amount","Putt / Pull / Delete"]
     
@@ -76,23 +78,39 @@ def add_new():
 @app.route('/itemsubmit', methods=['POST'])
 def submit():
     
-    #Add some server side form validation
-    
+    pf = ProfanityFilter(no_word_boundaries = True)
     serial = request.form['serial']
     name = request.form['name']
     location = request.form['location']
     amount = request.form['amount']
     
-    db = Database()
-    db.addItem(serial, name, location, amount)
+    #Since this is an open text field accessible on a public website,
+    #some form of profanity check is needed
+    if pf.is_profane(name):
+        return redirect("/warehouse")
     
-    return redirect("/warehouse")
+    else:
+        db = Database()
+        db.addItem(serial, name, location, amount)
+        return redirect("/warehouse")
     
 #Simply loads the about html file
 @app.route('/about')
 def about():
     
     return render_template("about.html")
+    
+#Semi-obscure route that I have a cron job set up for my RaspberryPi
+#Flushes out the database and adds back all original entries
+#Resests once per day at 2am 
+@app.route('/resetdatabase0200am')
+def reset():
+    
+    initializer = db_tool()
+    initializer.deleteAll()
+    initializer.addItems()
+    
+    return "Okay"
 
 #How the flask app starts itself up
 if __name__ == '__main__':
