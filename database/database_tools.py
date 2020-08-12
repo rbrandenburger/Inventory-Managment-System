@@ -38,3 +38,8 @@ class db_tool:
         session.commit()
         
         session.close()
+
+if __name__ == '__main__':
+	db = db_tool()
+	db.deleteAll()
+	db.addItems()

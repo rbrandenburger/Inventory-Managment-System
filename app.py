@@ -60,10 +60,17 @@ def updated_dashboard():
     
         if(choice == "pull") :
             amt *= -1
-            #Add check for going negative, possible database side...
-        
+
         db = Database()
-        db.changeItemAmount(serial, amt)
+        item = db.getBySerial(serial)
+        
+        #Check to make sure amount doesn't go negative
+        if((item.amount + amt) < 0):
+            db.changeItemAmount(serial, 0)
+            
+        else:
+            db.changeItemAmount(serial, (item.amount + amt))
+        
     
     return redirect("/warehouse")
 
@@ -110,7 +117,7 @@ def reset():
     initializer.deleteAll()
     initializer.addItems()
     
-    return "Okay"
+    return redirect("/warehouse")
 
 #How the flask app starts itself up
 if __name__ == '__main__':

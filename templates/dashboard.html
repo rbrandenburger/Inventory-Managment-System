@@ -51,8 +51,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="margins">
-            <form action="/warehouse/addnew" method="GET" style="margin:20px auto;">
+        <div class="margins" style="width: 400px">
+            <form action="warehouse/resetdatabase0200am" method="GET" style="margin:20px auto; float: left;">
+                <input type="submit" name="reset" value="Reset System" >
+            </form>
+            <form action="/warehouse/addnew" method="GET" style="margin:20px auto; float: right;">
                 <input type="submit" name="add" value="Add A New Item" >
             </form>
         </div>

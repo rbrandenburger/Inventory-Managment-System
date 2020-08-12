@@ -19,21 +19,21 @@ class Database:
         
         session = Session()
         
-        results =session.query(Item).filter_by(serial=serial_num).first()
+        results = session.query(Item).filter_by(serial=serial_num).first()
         
         session.close()
         
         return results
     
     #Change the item amount
-    def changeItemAmount(self,serial_num, how_much):
+    def changeItemAmount(self,serial_num, amount):
         
         session = Session()
         
-        session.query(Item).filter_by(serial=serial_num).update({Item.amount : Item.amount + how_much})
-        
+        session.query(Item).filter_by(serial=serial_num).update({Item.amount : amount})
+    
         session.commit()
-        
+    
         session.close()
         
     #Returns every item in the database
